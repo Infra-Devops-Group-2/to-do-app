@@ -19,6 +19,6 @@ pipeline {
 //                     sh "docker run -d -p 8085:8085  --name helloapp ${user}/heloapp:latest"
 //                 }
 //             }
-        }
+//         }
     }
 }
