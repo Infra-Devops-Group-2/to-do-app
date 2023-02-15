@@ -4,7 +4,7 @@ metadata:
   name: argonauts-todo-app-service
 spec:
   selector:
-    app.kubernetes.io/name: todo-app
+    app: todo-app
   ports:
     - protocol: TCP
       port: 80
