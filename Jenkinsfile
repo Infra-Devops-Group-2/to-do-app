@@ -1,15 +1,19 @@
 pipeline {
     agent any
+    environment {
+            DOCKER_IMAGE = credentials('ecr-docker-image-id')
+            ECR_REGISTRY = credentials('ecr-registry')
+       }
     stages {
         stage ('Build') {
             steps {
-                sh "aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 154647635698.dkr.ecr.ap-southeast-1.amazonaws.com"
-                sh "docker build -t 154647635698.dkr.ecr.ap-southeast-1.amazonaws.com/argonauts:latest ."
+                sh "aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin $ECR_REGISTRY"
+                sh "docker build -t $ECR_REGISTRY/$DOCKER_IMAGE ."
             }
         }
         stage ('Push to registry') {
             steps {
-                sh "docker push 154647635698.dkr.ecr.ap-southeast-1.amazonaws.com/argonauts:latest"
+                sh "docker push $ECR_REGISTRY/$DOCKER_IMAGE"
             }
         }
         stage ('Deploy') {
