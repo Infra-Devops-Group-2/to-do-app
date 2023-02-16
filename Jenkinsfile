@@ -12,13 +12,11 @@ pipeline {
                 sh "docker push 154647635698.dkr.ecr.ap-southeast-1.amazonaws.com/argonauts:latest"
             }
         }
-//         stage ('Deploy') {
-//             steps {
-//                 sh "docker stop helloapp || true && docker rm helloapp || true"
-//                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]) {
-//                     sh "docker run -d -p 8085:8085  --name helloapp ${user}/heloapp:latest"
-//                 }
-//             }
-//         }
+        stage ('Deploy') {
+            steps {
+                sh "kubectl apply -f deployments/deployment.yaml"
+                sh "kubectl apply -f deployments/service.yaml"
+            }
+        }
     }
 }
