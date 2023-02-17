@@ -18,6 +18,7 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
+                sh "aws eks update-kubeconfig --region ap-southeast-1 --name Argonauts-cluster"
                 sh "kubectl apply -f deployments/deployment.yaml"
                 sh "kubectl apply -f deployments/service.yaml"
             }
